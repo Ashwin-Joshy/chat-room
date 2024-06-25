@@ -1,0 +1,79 @@
+<div class="container main">
+  <div class=" flex">
+    <div class="col-lg-1" >
+      <!-- Profile Picture -->
+      <img
+        src="https://fastly.picsum.photos/id/483/200/200.jpg?hmac=tIKQEdwuW7trzVGWGE-cAgtpmRJla51INgO9dvJG3hA"
+        class="image"
+        alt="Profile Picture"
+      />
+    </div>
+    <div class="col-lg-10 align-items-center">
+      <header>{{ room.name }}</header>
+    </div>
+    <div class="col-lg-1 flex3">
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        aria-label="Example icon-button with a menu"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>dialpad</mat-icon>
+          <span>Redial</span>
+        </button>
+        <button mat-menu-item disabled>
+          <mat-icon>voicemail</mat-icon>
+          <span>Check voice mail</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>notifications_off</mat-icon>
+          <span>Disable alerts</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+  <div class="row">
+    <b class="rainbow-line"></b>
+  </div>
+  <div #chats class="chats" (scroll)="onScroll()">
+    <div infiniteScroll  [infiniteScrollDistance]="2" [infiniteScrollThrottle]="10"
+    (scrolled)="loadMoreChats()" (scrolledUp)="loadMoreChats()" #textArea *ngFor="let m of messages" class="sub-chat-holder">
+      <div *ngIf="m.userEmail != activeUserEmail" class="chat-message">
+        <div class="avatar">
+          <img [src]="senderImage" alt="Sender's Avatar" />
+        </div>
+        <div class="inner-msg">
+          <div class="sender-name">{{ m.userName }}</div>
+            <div #flexContainer class="sender-data-cont">
+              <div appMultiLineCheck (multiLineCheck)="onMultiLineCheck($event)"  class="message" [innerHTML]="m.message" >aaa</div>
+              <div class="timestamp">{{ m.createdAt | date : "shortTime" }}</div>
+            </div>
+          </div>
+      </div>
+      <div class="chat-message receiver" *ngIf="m.userEmail == activeUserEmail">
+        <div class="inner-owner-msg receiver-data">
+          <div class="ownerName">{{ ownerName }}</div>
+          <div class="message" [innerHTML]="m.message"></div>
+          <div class="timestamp">{{ m.createdAt | date : "shortTime" }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class=" inputMessage">
+    <div class="message-input-container">
+      <textarea
+        #messageToSend
+        (input)="adjustSize(messageToSend)"
+        class="form-control"
+        rows="1"
+        placeholder="Type a message..."
+      ></textarea>
+      <button (click)="sendMessage(messageToSend)" class="btn btn-primary">
+        Send
+      </button>
+    </div>
+  </div>
+</div>

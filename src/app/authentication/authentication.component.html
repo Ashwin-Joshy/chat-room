@@ -1,0 +1,40 @@
+<div class="container">
+  <div *ngIf="!isLoggedIn">
+    <form *ngIf="!isSigningUp" [formGroup]="authForm" (ngSubmit)="login()">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" formControlName="email" class="form-control" id="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" formControlName="password" class="form-control" id="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+      <p class="lead">
+        Don't have an account? <a (click)="isSigningUp = true">Sign Up</a>
+      </p>
+    </form>
+    <form *ngIf="isSigningUp" [formGroup]="authForm" (ngSubmit)="signUp()">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" formControlName="name" class="form-control" id="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" formControlName="email" class="form-control" id="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" formControlName="password" class="form-control" id="password" required>
+      </div>
+      <div class="form-group">
+        <label for="mobile">Mobile</label>
+        <input type="mobile" formControlName="mobile" class="form-control" id="mobile" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Sign Up</button>
+      <p class="lead">
+        Already have an account? <a (click)="isSigningUp = false">Login</a>
+      </p>
+    </form>
+  </div>
+</div>
